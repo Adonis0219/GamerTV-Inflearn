@@ -248,6 +248,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   limitMax: {x: 10, y: 18, z: 0}
   limitMin: {x: -10, y: -18, z: 0}
+  temp: {x: 0, y: 0, z: 0}
+  prefabBullet: {fileID: 1694106279841538003, guid: a61391d44e1674645b38f5eb66432237, type: 3}
+  speed: 10
 --- !u!1 &1998647426
 GameObject:
   m_ObjectHideFlags: 0

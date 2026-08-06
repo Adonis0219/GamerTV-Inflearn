@@ -1,9 +1,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    float speed;
     float x, y;
 
     public Vector3 limitMax;
@@ -11,18 +10,26 @@ public class Player : MonoBehaviour
 
     public Vector3 temp;
 
+    public GameObject prefabBullet;
+    float time;
+    public float speed;
 
     private void Start()
     {
-        
+        time = 0;
+        speed = 10.0f;
     }
 
     private void Update()
     {
-        speed = 0.1f;
+        Move();
+        FireBullet();
+    }
 
-        float x = Input.GetAxis("Horizontal") * speed;
-        float y = Input.GetAxis("Vertical") * speed;
+    public void Move()
+    {
+        float x = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+        float y = Input.GetAxis("Vertical")   * speed * Time.deltaTime;
 
         transform.Translate(new Vector3(x, y, 0));
 
@@ -49,6 +56,17 @@ public class Player : MonoBehaviour
             temp.x = transform.position.x;
             temp.y = limitMin.y;
             transform.position = temp;
+        }
+    }
+
+    public void FireBullet()
+    {
+        time += Time.deltaTime;
+        
+        if (time > 0.3f)
+        {
+            Instantiate(prefabBullet, transform.position, Quaternion.identity);
+            time -= .3f;
         }
     }
 
