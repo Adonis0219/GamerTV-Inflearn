@@ -11,13 +11,20 @@ public class PlayerController : MonoBehaviour
     public Vector3 temp;
 
     public GameObject prefabBullet;
-    float time;
     public float speed;
+    float time;
+
+    float fireDelay;
+    Animator animator;
+    bool onDead;
 
     private void Start()
     {
-        time = 0;
+        fireDelay = 0;
         speed = 10.0f;
+
+        animator = GetComponent<Animator>();
+        onDead = false;
     }
 
     private void Update()
@@ -61,12 +68,12 @@ public class PlayerController : MonoBehaviour
 
     public void FireBullet()
     {
-        time += Time.deltaTime;
+        fireDelay += Time.deltaTime;
         
-        if (time > 0.3f)
+        if (fireDelay > 0.3f)
         {
             Instantiate(prefabBullet, transform.position, Quaternion.identity);
-            time -= .3f;
+            fireDelay -= .3f;
         }
     }
 
@@ -78,5 +85,26 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(limitMin, new Vector2(limitMin.x, limitMax.y));
         Gizmos.DrawLine(limitMax, new Vector2(limitMax.x, limitMin.y));
         Gizmos.DrawLine(limitMax, new Vector2(limitMin.x, limitMax.y));
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("EnemyBullet"))
+        {
+            animator.SetInteger("State", 1);
+            onDead = true;
+        }
+    }
+
+    void OnDeadCheck()
+    {
+        if (onDead)
+        {
+            time += Time.deltaTime;
+        }
+        if (time > .6f)
+        {
+            Destroy(gameObject);
+        }
     }
 }

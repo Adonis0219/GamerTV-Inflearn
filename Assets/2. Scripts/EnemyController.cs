@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public GameObject enemyBullet;
+    GameObject player;
     float fireDelay;
 
     Animator animator;
@@ -18,6 +19,7 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        player   = GameObject.FindWithTag("Player");
         onDead   = false;
         time     = 0.0f;
     }
@@ -38,6 +40,9 @@ public class EnemyController : MonoBehaviour
 
     public void FireBullet()
     {
+        if (player == null) 
+            return;
+
         fireDelay += Time.deltaTime;
 
         if (fireDelay > 3f)
