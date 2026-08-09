@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    static string BULLET_TAG = "Bullet";
-    static string STATE = "State";
+    public GameObject enemyBullet;
+    float fireDelay;
 
     Animator animator;
     [SerializeField] AnimationClip deadClip;
+
+    static string BULLET_TAG = "Bullet";
+    static string STATE = "State";
 
     bool onDead;
     float time;
@@ -28,6 +31,19 @@ public class EnemyController : MonoBehaviour
         if (time > 0.6f)
         {
             Destroy(gameObject);
+        }
+
+        FireBullet();
+    }
+
+    public void FireBullet()
+    {
+        fireDelay += Time.deltaTime;
+
+        if (fireDelay > 3f)
+        {
+            Instantiate(enemyBullet, transform.position, Quaternion.identity);
+            fireDelay -= 3f; 
         }
     }
 
