@@ -3,21 +3,29 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    // 총알
     public GameObject enemyBullet;
     GameObject player;
     float fireDelay;
 
-    Rigidbody2D rb2D;
-    float moveSpeed;
+    // 아이템
+    public GameObject[] items;
 
+    // 파괴
     Animator animator;
     [SerializeField] AnimationClip deadClip;
 
-    static string BULLET_TAG = "Bullet";
-    static string STATE = "State";
-
     bool onDead;
     float time;
+
+    // 이동
+    Rigidbody2D rb2D;
+    float moveSpeed;
+
+    static string BULLET_TAG = "Bullet";
+    static string STATE = "State";
+    static string BLOCKCOLLIDER = "BlockCollider";
+    static string ITEMDROPENEMY = "ItemDropEnemy";
 
     private void Start()
     {
@@ -27,6 +35,7 @@ public class EnemyController : MonoBehaviour
         onDead    = false;
         moveSpeed = Random.Range(5f, 8f);
         time      = 0.0f;
+        fireDelay = 2.5f;
 
         Move();
     }
@@ -40,6 +49,12 @@ public class EnemyController : MonoBehaviour
         if (time > 0.6f)
         {
             Destroy(gameObject);
+
+            if (gameObject.CompareTag(ITEMDROPENEMY))
+            {
+                int tmp = Random.Range(0, 2);
+                Instantiate(items[tmp], transform.position, Quaternion.identity);
+            }
         }
 
         FireBullet();
@@ -75,11 +90,20 @@ public class EnemyController : MonoBehaviour
             animator.SetInteger(STATE, 1);
             OnDead();
         }
+        if (collision.CompareTag(BLOCKCOLLIDER))
+        {
+            OnDisappear();
+        }
     }
 
     void OnDead()
     {
         onDead = true;
+    }
+
+    void OnDisappear()
+    {
+        Destroy(gameObject);
     }
 
     #region 코루틴

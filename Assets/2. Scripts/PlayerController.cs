@@ -30,7 +30,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Move();
-        FireBullet();
+        FireBullet(); 
+        OnDeadCheck();
     }
 
     public void Move()

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8395246953007823894}
   m_Layer: 0
   m_Name: Enemy4
-  m_TagString: Enemy
+  m_TagString: ItemDropEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -203,4 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   enemyBullet: {fileID: 9031138022060519066, guid: b5c966ed109d44e419e0af468eec351b, type: 3}
+  items:
+  - {fileID: 8016910451522544821, guid: 2ab0bea0756cde44abd79fd9a09f13d9, type: 3}
+  - {fileID: 814001596289575322, guid: c9f9fdb844afd514f9435060d01e69dc, type: 3}
   deadClip: {fileID: 7400000, guid: e4d166d76a888154393bdd90fd2b9896, type: 2}
