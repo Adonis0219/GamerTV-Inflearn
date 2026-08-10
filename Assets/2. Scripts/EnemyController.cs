@@ -7,6 +7,9 @@ public class EnemyController : MonoBehaviour
     GameObject player;
     float fireDelay;
 
+    Rigidbody2D rb2D;
+    float moveSpeed;
+
     Animator animator;
     [SerializeField] AnimationClip deadClip;
 
@@ -18,10 +21,14 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
-        player   = GameObject.FindWithTag("Player");
-        onDead   = false;
-        time     = 0.0f;
+        animator  = GetComponent<Animator>();
+        rb2D      = GetComponent<Rigidbody2D>();
+        player    = GameObject.FindWithTag("Player");
+        onDead    = false;
+        moveSpeed = Random.Range(5f, 8f);
+        time      = 0.0f;
+
+        Move();
     }
 
     private void Update()
@@ -36,6 +43,15 @@ public class EnemyController : MonoBehaviour
         }
 
         FireBullet();
+    }
+
+    void Move()
+    {
+        if (player == null) return;
+
+        Vector3 dist = player.transform.position - transform.position;
+        Vector3 dir = dist.normalized;
+        rb2D.linearVelocity = dir * moveSpeed;
     }
 
     public void FireBullet()
