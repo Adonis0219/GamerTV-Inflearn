@@ -10,13 +10,17 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 temp;
 
-    public GameObject prefabBullet;
+    public GameObject[] prefabBullets;
     public float speed;
     float time;
 
     float fireDelay;
     Animator animator;
     bool onDead;
+
+    // 아이템
+    public int Damage;
+    public int Boom;
 
     private void Start()
     {
@@ -25,6 +29,9 @@ public class PlayerController : MonoBehaviour
 
         animator = GetComponent<Animator>();
         onDead = false;
+
+        Damage = 1;
+        Boom = 0;
     }
 
     private void Update()
@@ -73,7 +80,7 @@ public class PlayerController : MonoBehaviour
         
         if (fireDelay > 0.3f)
         {
-            Instantiate(prefabBullet, transform.position, Quaternion.identity);
+            Instantiate(prefabBullets[Damage - 1], transform.position, Quaternion.identity);
             fireDelay -= .3f;
         }
     }

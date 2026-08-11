@@ -6,6 +6,7 @@ public class EnemyController : MonoBehaviour
     // 총알
     public GameObject enemyBullet;
     GameObject player;
+    PlayerController playerController;
     float fireDelay;
 
     // 아이템
@@ -22,6 +23,11 @@ public class EnemyController : MonoBehaviour
     Rigidbody2D rb2D;
     float moveSpeed;
 
+    // HP
+    int hp;
+    // 태그 임시 저장
+    string tagName;
+
     static string BULLET_TAG = "Bullet";
     static string STATE = "State";
     static string BLOCKCOLLIDER = "BlockCollider";
@@ -32,10 +38,17 @@ public class EnemyController : MonoBehaviour
         animator  = GetComponent<Animator>();
         rb2D      = GetComponent<Rigidbody2D>();
         player    = GameObject.FindWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
         onDead    = false;
         moveSpeed = Random.Range(5f, 8f);
         time      = 0.0f;
         fireDelay = 2.5f;
+        tagName = gameObject.tag;
+
+        if (gameObject.CompareTag(ITEMDROPENEMY))
+            hp = 3;
+        else
+            hp = 1;
 
         Move();
     }
@@ -50,14 +63,14 @@ public class EnemyController : MonoBehaviour
         {
             Destroy(gameObject);
 
-            if (gameObject.CompareTag(ITEMDROPENEMY))
+            if (tagName == ITEMDROPENEMY)
             {
                 int tmp = Random.Range(0, 2);
                 Instantiate(items[tmp], transform.position, Quaternion.identity);
             }
         }
 
-        FireBullet();
+        //FireBullet();
     }
 
     void Move()
@@ -87,8 +100,13 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.CompareTag(BULLET_TAG))
         {
-            animator.SetInteger(STATE, 1);
-            OnDead();
+            hp -= playerController.Damage;
+
+            if (hp <= 0)
+            {
+                animator.SetInteger(STATE, 1);
+                OnDead();
+            }
         }
         if (collision.CompareTag(BLOCKCOLLIDER))
         {
@@ -99,6 +117,10 @@ public class EnemyController : MonoBehaviour
     void OnDead()
     {
         onDead = true;
+        // 죽을 때 태그를 없애서 총알 중복 손실 방지
+        gameObject.tag = "Untagged";
+
+        // 스코어 증가 코드 작성
     }
 
     void OnDisappear()

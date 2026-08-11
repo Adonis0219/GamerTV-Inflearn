@@ -1099,8 +1099,13 @@ MonoBehaviour:
   limitMax: {x: 10, y: 18, z: 0}
   limitMin: {x: -10, y: -18, z: 0}
   temp: {x: 0, y: 0, z: 0}
-  prefabBullet: {fileID: 1694106279841538003, guid: a61391d44e1674645b38f5eb66432237, type: 3}
+  prefabBullets:
+  - {fileID: 1694106279841538003, guid: a61391d44e1674645b38f5eb66432237, type: 3}
+  - {fileID: 4427312039990643635, guid: 7bbf7c660bd9b304c8f7f74bef910edb, type: 3}
+  - {fileID: 376653878216643181, guid: 34581b6d7f5ec794cb2afe5043f76dee, type: 3}
   speed: 10
+  Damage: 0
+  Boom: 0
 --- !u!70 &1943012105
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

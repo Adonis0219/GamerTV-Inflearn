@@ -6,6 +6,7 @@ public class BulletController : MonoBehaviour
     float time;
 
     static string ENEMY_TAG = "Enemy";
+    static string ITEMDROPENEMY = "ItemDropEnemy";
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,7 +39,7 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag(ENEMY_TAG))
+        if (collision.CompareTag(ENEMY_TAG) || collision.CompareTag(ITEMDROPENEMY))
             Destroy(gameObject);
     }
 }
