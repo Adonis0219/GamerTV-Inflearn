@@ -20,7 +20,16 @@ public class PlayerController : MonoBehaviour
 
     // 아이템
     public int Damage;
-    public int Boom;
+    private int boom;
+    public int Boom
+    {
+        get => boom;
+        set
+        {
+            boom = value;
+            UIManager.instance.BoomCheck(boom);
+        }
+    }
 
     private void Start()
     {
@@ -37,7 +46,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Move();
-        FireBullet(); 
+        FireBullet();
+        FireBoom();
         OnDeadCheck();
     }
 
@@ -82,6 +92,18 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(prefabBullets[Damage - 1], transform.position, Quaternion.identity);
             fireDelay -= .3f;
+        }
+    }
+
+    public void FireBoom()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (Boom >= 1)
+            {
+                Debug.Log("Boom!");
+                Boom--;
+            }
         }
     }
 
