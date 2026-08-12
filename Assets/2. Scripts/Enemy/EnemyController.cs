@@ -1,6 +1,16 @@
 using System.Collections;
 using UnityEngine;
 
+public static class Tag
+{
+    public static string BULLET_TAG = "Bullet";
+    public static string BOOM_TAG = "BoomMissile";
+    public static string STATE = "State";
+    public static string PLAYER = "Player";
+    public static string BLOCKCOLLIDER = "BlockCollider";
+    public static string ITEMDROPENEMY = "ItemDropEnemy";
+}
+
 public class EnemyController : MonoBehaviour
 {
     // 총알
@@ -28,10 +38,7 @@ public class EnemyController : MonoBehaviour
     // 태그 임시 저장
     string tagName;
 
-    static string BULLET_TAG = "Bullet";
-    static string STATE = "State";
-    static string BLOCKCOLLIDER = "BlockCollider";
-    static string ITEMDROPENEMY = "ItemDropEnemy";
+
 
     private void Start()
     {
@@ -45,7 +52,7 @@ public class EnemyController : MonoBehaviour
         fireDelay = 2.5f;
         tagName = gameObject.tag;
 
-        if (gameObject.CompareTag(ITEMDROPENEMY))
+        if (gameObject.CompareTag(Tag.ITEMDROPENEMY))
             hp = 3;
         else
             hp = 1;
@@ -63,7 +70,7 @@ public class EnemyController : MonoBehaviour
         {
             Destroy(gameObject);
 
-            if (tagName == ITEMDROPENEMY)
+            if (tagName == Tag.ITEMDROPENEMY)
             {
                 int tmp = Random.Range(0, 2);
                 Instantiate(items[tmp], transform.position, Quaternion.identity);
@@ -98,19 +105,22 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag(BULLET_TAG))
+        if (collision.CompareTag(Tag.BULLET_TAG))
         {
             hp -= playerController.Damage;
-
-            if (hp <= 0)
-            {
-                animator.SetInteger(STATE, 1);
-                OnDead();
-            }
         }
-        if (collision.CompareTag(BLOCKCOLLIDER))
+        if (collision.CompareTag(Tag.BOOM_TAG))
+        {
+            hp -= playerController.boomDmg;
+        }
+        if (collision.CompareTag(Tag.BLOCKCOLLIDER))
         {
             OnDisappear();
+        }
+        if (hp <= 0)
+        {
+            animator.SetInteger(Tag.STATE, 1);
+            OnDead();
         }
     }
 

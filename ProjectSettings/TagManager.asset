@@ -10,6 +10,7 @@ TagManager:
   - BlockCollider
   - ItemDropEnemy
   - Item
+  - BoomMissile
   layers:
   - Default
   - TransparentFX

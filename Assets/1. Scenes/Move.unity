@@ -1530,7 +1530,9 @@ MonoBehaviour:
   - {fileID: 376653878216643181, guid: 34581b6d7f5ec794cb2afe5043f76dee, type: 3}
   speed: 10
   Damage: 0
-  Boom: 0
+  boomMissile: {fileID: 4715335104159822114, guid: b3e20791d7a5b094e989d10ce355753f, type: 3}
+  boomPosY: 0
+  boomDmg: 0
 --- !u!70 &1943012105
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

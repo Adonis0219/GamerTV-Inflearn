@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     // 아이템
     public int Damage;
     private int boom;
+
     public int Boom
     {
         get => boom;
@@ -31,16 +32,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // 폭탄
+    public GameObject boomMissile;
+    public int boomPosY;
+    public int boomDmg;
+
     private void Start()
     {
         fireDelay = 0;
-        speed = 10.0f;
+        speed     = 10.0f;
 
         animator = GetComponent<Animator>();
-        onDead = false;
+        onDead   = false;
 
         Damage = 1;
-        Boom = 0;
+        Boom   = 0;
+
+        boomPosY = -30;
+        boomDmg  = 30;
     }
 
     private void Update()
@@ -101,7 +110,9 @@ public class PlayerController : MonoBehaviour
         {
             if (Boom >= 1)
             {
-                Debug.Log("Boom!");
+                GameObject go = Instantiate(boomMissile, 
+                                new Vector3(transform.position.x, boomPosY, transform.position.z), 
+                                Quaternion.identity);
                 Boom--;
             }
         }

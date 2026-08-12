@@ -49,7 +49,7 @@ public class EnemyBulletController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag(Tag.PLAYER) || collision.CompareTag(Tag.BOOM_TAG))
         {
             Destroy(gameObject);
         }
