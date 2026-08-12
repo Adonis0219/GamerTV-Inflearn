@@ -8,7 +8,6 @@ public class ItemController : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         speed = 10f;
         score = 100;
     }
@@ -31,5 +30,9 @@ public class ItemController : MonoBehaviour
         }
     }
 
-    protected virtual void ItemGain() { }
+    protected virtual void ItemGain()
+    {
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
+    }
 }

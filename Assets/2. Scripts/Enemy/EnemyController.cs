@@ -86,7 +86,7 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        //FireBullet();
+        FireBullet();
     }
 
     void Move()

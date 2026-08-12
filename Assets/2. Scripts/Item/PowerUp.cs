@@ -6,6 +6,8 @@ public class PowerUp : ItemController
 
     protected override void ItemGain()
     {
+        base.ItemGain();
+
         playerController = player.GetComponent<PlayerController>();
 
         if (playerController.Damage < 3)
