@@ -1,10 +1,25 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
     public GameObject[] ui_Booms;
+
+    // 점수
+    public Text scoreText;
+
+    int score;
+    public int Score
+    {
+        get => score;
+        set
+        {
+            score = value;
+            scoreText.text = score.ToString();
+        }
+    }
 
     private void Awake()
     {
@@ -14,6 +29,11 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        Score = 0;
     }
 
     // 폭탄 개수를 체크하는 함수

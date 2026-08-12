@@ -12,5 +12,10 @@ public class Boom : ItemController
         {
             playerController.Boom++;
         }
+
+        if (playerController.Boom >= 4)
+        {
+            UIManager.instance.Score += base.score;
+        }
     }
 }

@@ -1,5 +1,7 @@
 using System.Collections;
+using UnityEditor.UI;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public static class Tag
 {
@@ -38,7 +40,8 @@ public class EnemyController : MonoBehaviour
     // 태그 임시 저장
     string tagName;
 
-
+    // 점수
+    int score;
 
     private void Start()
     {
@@ -53,9 +56,15 @@ public class EnemyController : MonoBehaviour
         tagName = gameObject.tag;
 
         if (gameObject.CompareTag(Tag.ITEMDROPENEMY))
+        {
+            score = 30;
             hp = 3;
+        }
         else
+        {
+            score = 10;
             hp = 1;
+        }
 
         Move();
     }
@@ -127,10 +136,15 @@ public class EnemyController : MonoBehaviour
     void OnDead()
     {
         onDead = true;
+
+        if (gameObject.tag != "Untagged")
+        {
+            // 스코어 증가 코드 작성
+            UIManager.instance.Score += score;
+        }
+
         // 죽을 때 태그를 없애서 총알 중복 손실 방지
         gameObject.tag = "Untagged";
-
-        // 스코어 증가 코드 작성
     }
 
     void OnDisappear()

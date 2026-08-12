@@ -4,11 +4,13 @@ public class ItemController : MonoBehaviour
 {
     protected GameObject player;
     protected float speed;
+    protected int score;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         speed = 10f;
+        score = 100;
     }
 
     private void Update()
