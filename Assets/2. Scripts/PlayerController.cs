@@ -141,6 +141,9 @@ public class PlayerController : MonoBehaviour
     {
         if (onDead)
         {
+            if (SoundManager.instance.playerDeadSnd.isPlaying == false)
+                SoundManager.instance.playerDeadSnd.Play();
+
             time += Time.deltaTime;
         }
         if (time > .6f)

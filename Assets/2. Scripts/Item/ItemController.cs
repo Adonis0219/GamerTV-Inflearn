@@ -33,6 +33,9 @@ public class ItemController : MonoBehaviour
     protected virtual void ItemGain()
     {
         if (player == null)
+        {
             player = GameObject.FindGameObjectWithTag("Player");
+            SoundManager.instance.itemGainSnd.Play();
+        }
     }
 }

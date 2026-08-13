@@ -141,6 +141,7 @@ public class EnemyController : MonoBehaviour
         {
             // 스코어 증가 코드 작성
             UIManager.instance.Score += score;
+            SoundManager.instance.enemyDeadSnd.Play();
         }
 
         // 죽을 때 태그를 없애서 총알 중복 손실 방지
