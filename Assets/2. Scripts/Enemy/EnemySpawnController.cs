@@ -8,6 +8,7 @@ public class EnemySpawnController : MonoBehaviour
     public GameObject[] enemyGO;
     // 시간을 재는 변수
     float time;
+
     // 적 생성 시간
     float respawnTime;
     // 적 생성 숫자
