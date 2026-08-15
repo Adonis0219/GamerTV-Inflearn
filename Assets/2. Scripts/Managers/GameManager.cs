@@ -43,7 +43,10 @@ public class GameManager : MonoBehaviour
     public void CreatePlayer()
     {
         if (LifeCnt < 0)
+        { 
+            UIManager.instance.GameOver();
             return;
+        }
 
         GameObject player = Instantiate(playerPrefab);
         playerPos = new Vector3(Random.Range(-9.0f, 9.0f), -18f, 0);
