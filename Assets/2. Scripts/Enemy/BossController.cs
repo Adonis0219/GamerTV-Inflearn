@@ -1,15 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
     //
-    GameObject player;
-    PlayerController playerController;
+    public GameObject player;
+    public PlayerController playerController;
     // 체력바
     public float hp1; // 초록색
     public float hp2; // 빨간색
-    public float MaxHp1; // 빨간색
-    public float MaxHp2; // 빨간색
     // 
     Animator animator;
     //
@@ -25,6 +24,17 @@ public class BossController : MonoBehaviour
     //
     float speed;
 
+    // 총알 쏘는 위치
+    public Transform LAtkPos;
+    public Transform RAtkPos;
+    // 총알
+    public GameObject bossBullet;
+    // 총알 딜레이
+    public float fireDelay;
+
+    // 애니메이션 상태 확인용
+    int animNumber;
+
     private void Awake()
     {
         hp1 = 150.0f;
@@ -34,10 +44,7 @@ public class BossController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
-        playerController = player.GetComponent<PlayerController>();
         spawnMovePos = GameObject.Find("BossPos").GetComponent<Transform>();
-
         animator = GetComponent<Animator>();
 
         onDead = false;
@@ -46,6 +53,8 @@ public class BossController : MonoBehaviour
         score = 1000;
 
         speed = 10;
+
+        animNumber = 0;
     }
 
     // Update is called once per frame
@@ -63,6 +72,110 @@ public class BossController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (player == null && GameManager.instance.LifeCnt >= 0)
+        {
+            PlayerFind();
+        }
+
+        FireBullet();
+        AnimationSystem();
+    }
+
+    public void PlayerFind()
+    {
+        player = GameObject.FindWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
+    }
+
+    void FireBullet()
+    {
+        // 총알 발사 애니메이션
+        if (hp1 > 0 && isSpawn == false)
+        {
+            fireDelay += Time.deltaTime;
+
+            // 공격 딜레이가 1.0초 지나고 L공격 상태가 아니면
+            if (fireDelay > 1.0f && animNumber != 1)
+            {
+                // L공격
+                animNumber = 1;
+                fireDelay -= fireDelay;
+            }
+        }
+        if (hp1 <= 0)
+        {
+            fireDelay += Time.deltaTime;
+
+            // 공격 딜레이가 1.0초 지나고 L공격 상태가 아니면
+            if (fireDelay > 1.0f && animNumber != 2)
+            {
+                // L공격
+                animNumber = 2;
+                fireDelay -= fireDelay;
+            }
+        }
+    }
+    
+    // 애니메이션은 따로 관리
+    void AnimationSystem()
+    {
+        if (animNumber == 0)
+        {
+            StartCoroutine(Co_Idle());
+        }
+        if (animNumber == 1)
+        {
+            StartCoroutine(Co_LAtk());
+        }
+        if (animNumber == 2)
+        {
+            StartCoroutine(Co_RAtk());
+        }
+    }
+
+    IEnumerator Co_Idle()
+    {
+        animNumber = -1;
+        animator.SetTrigger(Tag.IDLE);
+        yield return new WaitForSeconds(.6f);
+    }
+
+    IEnumerator Co_LAtk()
+    {
+        animNumber = -1;
+        animator.SetTrigger(Tag.LATK);
+        yield return new WaitForSeconds(.6f);
+        animNumber = 0;
+    }
+
+    IEnumerator Co_RAtk()
+    {
+        animNumber = -1;
+        animator.SetTrigger(Tag.RATK);
+        yield return new WaitForSeconds(.6f);
+        animator.SetTrigger(Tag.RATK);
+        yield return new WaitForSeconds(.6f);
+        animator.SetTrigger(Tag.RATK);
+        yield return new WaitForSeconds(.6f);
+        animNumber = 0;
+    }
+
+    void LAtk()
+    {
+        if (player == null)
+            return;
+
+        Instantiate(bossBullet, LAtkPos.position, Quaternion.identity);
+        fireDelay -= 1;
+    }
+
+    void RAtk()
+    {
+        if (player == null)
+            return;
+
+        Instantiate(bossBullet, RAtkPos.position, Quaternion.identity);
+        fireDelay -= 1;
     }
 
     void OnDead()
@@ -88,7 +201,7 @@ public class BossController : MonoBehaviour
                               spawnMovePos.position, Time.deltaTime * speed);
 
         if (transform.position == spawnMovePos.position)
-            isSpawn = true;
+            isSpawn = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

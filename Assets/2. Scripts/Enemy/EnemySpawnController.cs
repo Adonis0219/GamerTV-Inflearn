@@ -39,7 +39,7 @@ public class EnemySpawnController : MonoBehaviour
     {
         Timer();
 
-        if (wave >= 5 && !bossCreate)
+        if (wave >= 1 && !bossCreate)
             BossCreate();
     }
     

@@ -13,6 +13,9 @@ public static class Tag
     public static string ITEMDROPENEMY = "ItemDropEnemy";
     // 보스
     public static string DIE = "Die";
+    public static string IDLE = "Idle";
+    public static string LATK = "LAttack";
+    public static string RATK = "RAttack";
 }
 
 public class EnemyController : MonoBehaviour
