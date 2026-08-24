@@ -2829,10 +2829,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1440, y: 2560}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2990,6 +2990,7 @@ MonoBehaviour:
   - {fileID: 4793521014327255567, guid: 07f58ba80aee0d24faa3c7291ac9e2ad, type: 3}
   - {fileID: 2391429512395438091, guid: acdd171d94bb3484a81099d0b4680951, type: 3}
   - {fileID: 8806651653642991313, guid: bb5cf051cfc3fc9469d773b3779cd1fa, type: 3}
+  bossWave: 5
   bossGO: {fileID: 4922183429397864668, guid: 29e46942decdccc4c8fba6f811379c1f, type: 3}
 --- !u!1 &1642138041
 GameObject:

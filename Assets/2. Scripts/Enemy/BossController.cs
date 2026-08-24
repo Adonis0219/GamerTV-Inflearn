@@ -9,6 +9,7 @@ public class BossController : MonoBehaviour
     // 체력바
     public float hp1; // 초록색
     public float hp2; // 빨간색
+
     // 
     Animator animator;
     //
@@ -35,6 +36,10 @@ public class BossController : MonoBehaviour
     // 애니메이션 상태 확인용
     int animNumber;
 
+    // 피격 관련
+    public SpriteRenderer spr;
+    Color oriColor;
+
     private void Awake()
     {
         hp1 = 150.0f;
@@ -55,6 +60,8 @@ public class BossController : MonoBehaviour
         speed = 10;
 
         animNumber = 0;
+
+        oriColor = spr.color;
     }
 
     // Update is called once per frame
@@ -204,6 +211,13 @@ public class BossController : MonoBehaviour
             isSpawn = false;
     }
 
+    IEnumerator OnDamagedEffect()
+    {
+        spr.color = Color.red;
+        yield return new WaitForSeconds(.2f);
+        spr.color = oriColor;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(Tag.BULLET_TAG))
@@ -212,6 +226,8 @@ public class BossController : MonoBehaviour
                 hp1 -= playerController.Damage;
             else
                 hp2 -= playerController.Damage;
+
+            StartCoroutine(OnDamagedEffect());
         }
         if (collision.CompareTag(Tag.BOOM_TAG))
         {
@@ -219,6 +235,8 @@ public class BossController : MonoBehaviour
                 hp1 -= playerController.boomDmg;
             else
                 hp2 -= playerController.boomDmg;
+
+            StartCoroutine(OnDamagedEffect());
         }
         if (hp2 <= 0)
         {

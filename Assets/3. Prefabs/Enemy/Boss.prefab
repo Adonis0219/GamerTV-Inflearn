@@ -235,11 +235,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7fc0822cf4b94459cc24f6a7aecb6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossController
+  player: {fileID: 0}
+  playerController: {fileID: 0}
   hp1: 0
   hp2: 0
   LAtkPos: {fileID: 2617493952582049606}
   RAtkPos: {fileID: 9099034914396925901}
   bossBullet: {fileID: 7237099673408092360, guid: 49b0293f6affd49449a4d380c274739e, type: 3}
+  fireDelay: 0
+  spr: {fileID: 7848515173049700278}
 --- !u!1 &5789382486095275463
 GameObject:
   m_ObjectHideFlags: 0

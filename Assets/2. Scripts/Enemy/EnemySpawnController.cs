@@ -15,8 +15,11 @@ public class EnemySpawnController : MonoBehaviour
     int enemyCount;
     // 랜덤 숫자 변수를 저장하는 배열
     int[] randomCount;
-    // 웨이브 >> 추후 사용
+    // 웨이브
     int wave;
+    [SerializeField]
+    [Tooltip("테스트용")]
+    int bossWave;
 
     // 보스 관련
     bool bossCreate;
@@ -39,7 +42,7 @@ public class EnemySpawnController : MonoBehaviour
     {
         Timer();
 
-        if (wave >= 1 && !bossCreate)
+        if (wave >= bossWave && !bossCreate)
             BossCreate();
     }
     
