@@ -11,6 +11,8 @@ public static class Tag
     public static string PLAYER = "Player";
     public static string BLOCKCOLLIDER = "BlockCollider";
     public static string ITEMDROPENEMY = "ItemDropEnemy";
+    // 보스
+    public static string DIE = "Die";
 }
 
 public class EnemyController : MonoBehaviour

@@ -34,6 +34,16 @@ public class UIManager : MonoBehaviour
     // 게임 오버
     public Image gameOverImg;
 
+    // 보스
+    public Image hpbarFrame;
+    public Image hpbar1;
+    public Image hpbar2;
+    public float MaxHp1;
+    public float MaxHp2;
+    public BossController bossController;
+    public bool isBossSpawn;
+
+    // 상수 목록
     static string HIGH_SCORE_KEY = "HighScore";
 
     private void Awake()
@@ -52,6 +62,8 @@ public class UIManager : MonoBehaviour
         highScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY, 0);
         blackOut_value = 1.0f;
         blackOut_speed = 0.5f;
+
+        isBossSpawn = false;
     }
 
     private void Update()
@@ -60,6 +72,16 @@ public class UIManager : MonoBehaviour
         {
             HideBlackOut();
         }
+        if (isBossSpawn)
+        {
+            BossHpBarCheck();
+        }
+        if (!isBossSpawn)
+        {
+            hpbarFrame.gameObject.SetActive(false);
+            hpbar1.gameObject.SetActive(false);
+            hpbar2.gameObject.SetActive(false);
+        }
     }
 
     // 폭탄 개수를 체크하는 함수
@@ -67,7 +89,7 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 0; i < ui_Booms.Length; i++)
         {
-            ui_Booms[i].SetActive(i <  boomCnt);
+            ui_Booms[i].SetActive(i < boomCnt);
         }
     }
 
@@ -94,7 +116,7 @@ public class UIManager : MonoBehaviour
         if (score > highScore)
         {
             PlayerPrefs.SetInt(HIGH_SCORE_KEY, score);
-            highScore= score;
+            highScore = score;
         }
 
         highScoreText.text = highScore.ToString();
@@ -113,5 +135,15 @@ public class UIManager : MonoBehaviour
         Destroy(gameObject);
         Destroy(GameManager.instance.gameObject);
         Destroy(SoundManager.instance.gameObject);
+    }
+
+    public void BossHpBarCheck()
+    {
+        hpbarFrame.gameObject.SetActive(true);
+        hpbar1.gameObject.SetActive(true);
+        hpbar2.gameObject.SetActive(true);
+
+        hpbar1.fillAmount = bossController.hp1 / MaxHp1;
+        hpbar2.fillAmount = bossController.hp2 / MaxHp2;
     }
 }

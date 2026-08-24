@@ -18,6 +18,10 @@ public class EnemySpawnController : MonoBehaviour
     // 웨이브 >> 추후 사용
     int wave;
 
+    // 보스 관련
+    bool bossCreate;
+    public GameObject bossGO;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,12 +30,17 @@ public class EnemySpawnController : MonoBehaviour
         enemyCount = 5;
         randomCount = new int[enemyCount];
         wave = 0;
+
+        bossCreate = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         Timer();
+
+        if (wave >= 5 && !bossCreate)
+            BossCreate();
     }
     
     /// <summary>
@@ -77,5 +86,20 @@ public class EnemySpawnController : MonoBehaviour
             float result = Random.Range(tmpX - 2.0f, tmpX + 2.0f);
             tmp.transform.position = new Vector3(result, tmp.transform.position.y, tmp.transform.position.z);
         }
+    }
+
+    void BossCreate()
+    {
+        bossCreate = true;
+        GameObject tmp = Instantiate(bossGO);
+        int randCnt = Random.Range(0, 9);
+        tmp.transform.position = enemySpawns[randCnt].position;
+
+        BossController bossController = tmp.GetComponent<BossController>();
+
+        UIManager.instance.isBossSpawn = true;
+        UIManager.instance.bossController = bossController;
+        UIManager.instance.MaxHp1 = bossController.hp1;
+        UIManager.instance.MaxHp2 = bossController.hp2;
     }
 }
